@@ -2,13 +2,14 @@ var urlAPI = 'http://157.230.17.132:3011/todos';
 var container = $('.container');
 var input = $('#type-text');
 var button = $('#go');
+var checkdelete = $('.delete');
 
 $(document).ready(function(){
 
   getData();
 
   button.click(function(){
-    var text = input.val();
+    var mytext = input.val();
     $.ajax({
       url: urlAPI,
       method: 'POST',
@@ -24,12 +25,27 @@ $(document).ready(function(){
     });
   });
 
+
+  $(document).on('click','.delete', function(){
+    var id = $(this).attr('data-id');
+    $.ajax({
+      url: urlAPI + '/' + id,
+      method: 'DELETE',
+
+      success: function(data){
+        getData();
+      },
+      error: function(errore){
+
+      }
+    });
+  });
 });
 
 function printData(file) {
   container.html('<ul>');
   for (var i = 0; i < file.length; i++) {
-  container.append('<li>' + file[i].text + '</li>');
+  container.append('<li><span class="delete" data-id="'+ file[i].id +'"><i class="far fa-check-circle"></i></span>' +  file[i].text + '</li><br>');
  }
  container.append('<ul>');
 }
