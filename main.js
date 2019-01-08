@@ -4,38 +4,38 @@ var input = $('#type-text');
 var button = $('#go');
 var checkdelete = $('.delete');
 
-$(document).ready(function(){
+$(document).ready(function() {
 
   getData();
 
-  button.click(function(){
+  button.click(function() {
     var mytext = input.val();
     $.ajax({
       url: urlAPI,
       method: 'POST',
       data: {
-        text:mytext
+        text: mytext
       },
-      success: function(data){
+      success: function(data) {
         getData();
       },
-      error: function(errore){
+      error: function(errore) {
 
       }
     });
   });
 
 
-  $(document).on('click','.delete', function(){
+  $(document).on('click', '.delete', function() {
     var id = $(this).attr('data-id');
     $.ajax({
       url: urlAPI + '/' + id,
       method: 'DELETE',
 
-      success: function(data){
+      success: function(data) {
         getData();
       },
-      error: function(errore){
+      error: function(errore) {
 
       }
     });
@@ -45,19 +45,19 @@ $(document).ready(function(){
 function printData(file) {
   container.html('<ul>');
   for (var i = 0; i < file.length; i++) {
-  container.append('<li><span class="delete" data-id="'+ file[i].id +'"><i class="far fa-check-circle"></i></span>' +  file[i].text + '</li><br>');
- }
- container.append('<ul>');
+    container.append('<li><span class="delete" data-id="' + file[i].id + '"><i class="far fa-check-circle"></i></span>' + file[i].text + '</li><br>');
+  }
+  container.append('<ul>');
 }
 
-function getData(){
+function getData() {
   $.ajax({
-  url: urlAPI,
-  method: 'GET',
-  success: function(data){
-   printData(data);
-  },
-  error: function(errore) {
+    url: urlAPI,
+    method: 'GET',
+    success: function(data) {
+      printData(data);
+    },
+    error: function(errore) {
 
     }
   });
